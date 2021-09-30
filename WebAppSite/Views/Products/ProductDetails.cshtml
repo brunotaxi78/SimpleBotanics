@@ -1,0 +1,202 @@
+﻿@model ClassLib.Models.Product
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row align-items-center">
+    <!-- image -->
+    <div class="col-lg-4 col-md-4 col-12">
+        <img src="@Html.DisplayFor(model => model.Picture)" alt="" class="img-fluid" />
+    </div>
+    <!-- description -->
+    <div class="offset-lg-1 col-lg-7 col-md-8 col-12">
+        <h2>@Html.DisplayFor(model => model.Name)</h2>
+        <div class="d-flex ">
+            <div class="dropdown">
+                <span class="font-12">
+                    <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="far fa-star text-warning"></i>
+                </span>
+                <a class="text-dark" href="#!" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="align-middle">
+                        <i class="fe fe-chevron-down"></i>
+                    </span>
+                </a>
+            </div>
+            <!-- rating -->
+            <div>
+                <span class="ml-2 font-12 text-dark"> 2,693 votações</span>
+            </div>
+        </div>
+        <hr class="my-4" />
+        <div class="mb-3 font-24">
+            <h3 class="text-dark mr-2">@Html.DisplayFor(model => model.Price) €</h3>
+        </div>
+        <button class="btn btn-primary" onclick="AddProduct('@Model.Picture', @Model.ProductId, '@Model.Name', @Model.Price)">Adicionar</button>
+        <a href="/" class="btn btn-light">Voltar à Loja</a>
+        @*<p class="mt-4 font-14 mb-1">
+            <span class="text-dark mr-1">Category:</span><span class="text-inherit ml-1">@Html.DisplayFor(model => model.Category.CategoryName)</span>
+        </p>*@
+        <p class="font-14">
+            @{
+                if (Model.Stock == 0)
+                {
+                    <span class="text-danger text-uppercase">Em Stock : @Html.DisplayFor(model => model.Stock)</span>
+                }
+                else if (Model.Stock < 5)
+                {
+                    <span class="text-warning text-uppercase">Em Stock : @Html.DisplayFor(model => model.Stock)</span>
+                }
+                else
+                {
+                    <span class="text-success text-uppercase">Em Stock : @Html.DisplayFor(model => model.Stock)</span>
+                }
+            }
+        </p>
+    </div>
+</div>
+<hr class="my-10" />
+<!-- product detail list -->
+<div class="row">
+    <div class="col-lg-4 col-md-5 col-12">
+        <h4 class="mb-3">Detalhes do produto</h4>
+        <ul class="list-group list-group-flush font-14 mb-0">
+
+            @{
+
+                string category = Model.Category.CategoryName;
+
+                switch (category)
+                {
+                    case "Plantas":
+
+                        //string[] allData = Model.Description.Split('-');
+                        <li class="list-group-item px-0 py-1">
+                            <span class="text-dark">Categoria :</span> @category
+                        </li>
+                        @*<li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Processor :</span> @allData[1]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">RAM :</span> @allData[2]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Graphic Card :</span> @allData[3]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">HardDisk :</span> @allData[4]
+                    </li>*@
+                        break;
+
+                    case "Acessórios":
+
+                        <li class="list-group-item px-0 py-1">
+                            <span class="text-dark">Categoria :</span> @category
+                        </li>
+
+                        @*string[] allData2 = Model.Description.Split('-');
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">System :</span> @allData2[0]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Processor :</span> @allData2[1]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">RAM :</span> @allData2[2]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Graphic Card :</span> @allData2[3]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">HardDisk :</span> @allData2[4]
+                    </li>*@
+                        break;
+
+                    case "Vasos":
+
+                        <li class="list-group-item px-0 py-1">
+                            <span class="text-dark">Categoria :</span> @category
+                        </li>
+
+                        @*string[] allData3 = Model.Description.Split('-');
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Size :</span> @allData3[0]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Response Time :</span> @allData3[1]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Refresh Rate :</span> @allData3[2]
+                    </li>*@
+                        break;
+
+                    case "Suportes":
+
+                        <li class="list-group-item px-0 py-1">
+                            <span class="text-dark">Categoria :</span> @category
+                        </li>
+
+                        @*string[] allData4 = Model.Description.Split('-');
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">System :</span> @allData4[0]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">RAM :</span> @allData4[1]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Internal Memory :</span> @allData4[2]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Camera Resolution :</span> @allData4[3]
+                    </li>*@
+                        break;
+
+                    case "Sementes":
+
+                        <li class="list-group-item px-0 py-1">
+                            <span class="text-dark">Categoria :</span> @category
+                        </li>
+
+                        @*string[] allData4 = Model.Description.Split('-');
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">System :</span> @allData4[0]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">RAM :</span> @allData4[1]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Internal Memory :</span> @allData4[2]
+                    </li>
+                    <li class="list-group-item px-0 py-1">
+                        <span class="text-dark">Camera Resolution :</span> @allData4[3]
+                    </li>*@
+                        break;
+
+                    default:
+
+                        <li class="list-group-item px-0 py-1">
+                            <span class="text-dark">Desculpe, sem informação disponível.</span>
+                        </li>
+
+                        break;
+                }
+
+
+            }
+
+
+        </ul>
+    </div>
+    <!-- description -->
+    <div class="col-lg-8 col-md-7 col-12">
+        <h4 class="mb-3">Descrição</h4>
+        <p>
+            @{
+                string data = Model.Description;
+                <span class="text-dark"></span> @data
+            }
+        </p>
+
+    </div>
+</div>

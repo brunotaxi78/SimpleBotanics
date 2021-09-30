@@ -1,0 +1,244 @@
+﻿@model ClassLib.Models.CreditCard
+
+@{
+
+    IEnumerable<ClassLib.Models.OrderDetail> orders = ViewData["orderdetails"] as IEnumerable<ClassLib.Models.OrderDetail>;
+    IEnumerable<ClassLib.Models.Order> orderlist = ViewData["orderlist"] as IEnumerable<ClassLib.Models.Order>;
+    IEnumerable<ClassLib.Models.Customer> customerList = ViewData["customerList"] as IEnumerable<ClassLib.Models.Customer>;
+    IEnumerable<ClassLib.Models.CreditCard> creditCardList = ViewData["creditCardList"] as IEnumerable<ClassLib.Models.CreditCard>;
+}
+
+@using Microsoft.AspNetCore.Identity
+@using WebAppSite.Areas.Identity.Data
+
+@inject SignInManager<WebAppSiteUser> SignInManager
+@inject UserManager<WebAppSiteUser> UserManager
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-8 mb-4">
+            <h4 class="mb-3">Dados para Pagamento</h4>
+            @*<form asp-action="TerminaCompra">*@
+            <form>
+                    <hr class="mb-4">
+
+                    <div class="d-block my-3">
+                        <div class="custom-control custom-radio" checked>
+                            @Html.RadioButtonFor(m => m.CardType, "credito") <span>Cartão Crédito</span>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            @Html.RadioButtonFor(m => m.CardType, "debito") <span>Cartão Débito</span>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            @Html.RadioButtonFor(m => m.CardType, "paypal") <span>PayPal</span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.CardType, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row">
+                        @{
+
+                            int? id = 0;
+
+                            @foreach (var item in orderlist)
+                            {
+                                id = item.CustomerId;
+                            }
+
+                            var cardName = "";
+                            var cardNumber = "";
+                            var expDate = "";
+                            var securityNumber = "";
+
+                            @foreach (var item in creditCardList)
+                            {
+                                var ok = false;
+
+                                if (item.CustomerId == id && ok == false)
+                                {
+                                    ok = true;
+                                    cardName = item.CardName.ToString();
+                                    cardNumber = item.CardNumber.ToString();
+                                    expDate = item.ExpDate.ToString();
+                                    securityNumber = item.SecurityNumber.ToString();
+                                }
+                            }
+                        }
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-name">Nome no Cartão</label>
+                            @Html.TextBox(Html.NameFor(model => model.CardName).ToString(), cardName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CardName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-number">Número do Cartão</label>
+                            @Html.TextBox(Html.NameFor(model => model.CardNumber).ToString(), cardNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="cc-expiration">Data Expiração</label>
+                            @Html.TextBox(Html.NameFor(model => model.ExpDate).ToString(), expDate, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ExpDate, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="cc-cvv">CVV</label>
+                            @Html.TextBox(Html.NameFor(model => model.SecurityNumber).ToString(), securityNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SecurityNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <input value="Finalizar Compra" onclick="AtualizaValores()" class="btn btn-primary btn-lg btn-block">
+
+                </form>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Carrinho de Compras</span>
+            </h4>
+            <ul class="list-group mb-3">
+                @{
+                    var bonus = 0.0;
+                    var total = 5.0; //Valor dos portes
+
+                    @foreach (var customer in customerList)
+                    {
+                        var id3 = customer.CustomerId;
+                        bonus = customer.ValorBonus;
+                    }
+
+                    @foreach (var item in orders)
+                    {
+
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">@item.Name</h6>
+                                <small class="text-muted">Quantidade : @item.Quantity</small>
+                            </div>
+                            <span class="text-muted">@item.Price €</span>
+                        </li>
+
+                        total += @item.Quantity * @item.Price;
+                    }
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-primary">
+                            <h6 class="my-0">Portes Envio</h6>
+                            <small>Portugal</small>
+                        </div>
+                        <span class="text-primary">5.00 €</span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-success">
+                            <h6 class="my-0">Bónus</h6>
+                        </div>
+                        <span class="text-success" id="valorBonus">0 €</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-warning">
+                        <span>Total (Euros)</span>
+                        <strong id="total">@total €</strong>
+                    </li>
+
+                }
+
+            </ul>
+            <div class="card p-2">
+                <div class="input-group">
+                    <input type="text" id="bonus" class="form-control" value="@bonus € " readonly>
+                    <div class="input-group-append">
+                        <button id="btnBonus" onclick="AtivaBonus()" class="btn btn-success">Ativar Bónus</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function AtivaBonus() {
+
+        var bonus = document.getElementById("bonus").value;
+
+        var total2 = @total - @bonus;
+
+        if (bonus != "0 €") {
+
+            document.getElementById("valorBonus").innerHTML = bonus;
+            toastr.success("Bónus Ativado!!!");
+            document.getElementById("bonus").value = "0 €";
+            document.getElementById("total").innerHTML = total2 + "€";
+            //AtualizaValores();
+        } else {
+            toastr.success("Bónus já utilizado!!!");
+
+        }
+
+    }
+
+    function AtualizaValores() {
+
+        if (document.getElementById("CardName").value.trim() == "") {
+            alert("Tem de introduzir o Nome no Cartão");
+            return false;
+        }
+
+        if (document.getElementById("CardNumber").value.trim() == "") {
+            alert("Tem de introduzir o Nº do Cartão");
+            return false;
+        }
+
+        if (document.getElementById("ExpDate").value.trim() == "") {
+            alert("Tem de introduzir a data de expiração");
+            return false;
+        }
+
+        if (document.getElementById("SecurityNumber").value.trim() == "") {
+            alert("Tem de introduzir o nº segurança");
+            return false;
+        }
+
+        if (document.getElementById("CardType").value.trim() == "") {
+            alert("Tem de selecionar o Tipo de Cartão");
+            return false;
+        }
+
+        var card_name = document.getElementById("CardName").value;
+
+        var card_number = document.getElementById("CardNumber").value;
+
+        var exp_date = document.getElementById("ExpDate").value;
+
+        var sec_code = document.getElementById("SecurityNumber").value;
+
+        var card_type = document.getElementById("CardType").value;
+
+        var objProduct = "@total" + ":" + "@bonus" + ":" + card_name + ":" + card_number + ":"+ exp_date + ":" + sec_code + ":" + card_type;
+
+        console.log(objProduct);
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(objProduct),
+            url: '/OrderDetails/TerminaCompra',
+            success: function () {
+
+                console.log("AtualizaValores - Ok");
+                window.location.href = '@Url.Action("Index2", "Products")';
+            },
+            error: function () {
+
+                toastr.error("Ocorreu um erro!!!");
+            }
+        });
+    }
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

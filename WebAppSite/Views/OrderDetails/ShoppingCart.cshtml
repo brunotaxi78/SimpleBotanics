@@ -1,0 +1,117 @@
+﻿@model ClassLib.Models.OrderDetail
+
+@{
+
+    IEnumerable<ClassLib.Models.OrderDetail> orders = ViewData["orderdetails"] as IEnumerable<ClassLib.Models.OrderDetail>;
+    IEnumerable<ClassLib.Models.Customer> customerList = ViewData["customerList"] as IEnumerable<ClassLib.Models.Customer>;
+
+}
+
+
+
+<div class="pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+                <!-- Shopping cart table -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="p-2 px-3 text-center text-uppercase">Produto</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-center text-uppercase">Preço</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-center text-uppercase">Quantidade</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-center text-uppercase">Remover</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var total = 5.0;
+                                var bonus = 0.0;
+
+                                @foreach (var customer in customerList)
+                                {
+                                    var id = customer.CustomerId;
+                                    bonus = customer.ValorBonus;
+                                }
+
+                                    @foreach (var item in orders)
+                                    {
+
+                                        <tr>
+                                            <th scope="row" class="border-0">
+                                                <div class="p-2">
+                                                    <img src="@item.ImageUrl" alt="" width="70" class="img-fluid rounded shadow-sm">
+                                                    <div class="ml-3 d-inline-block align-middle">
+                                                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">@item.Name</a></h5>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <td class="text-center border-0 align-middle"><strong>@item.Price €</strong></td>
+                                            <td class="text-center border-0 align-middle"><strong>@item.Quantity</strong></td>
+                                            <td class="text-center border-0 align-middle"><a onclick="shppingCartItemdelete('@item.ProductId', '@User.Identity.Name')" class="text-danger"><i class="fa fa-trash"></i></a></td>
+                                        </tr>
+
+                                        total += @item.Quantity * @item.Price;
+                                    }
+
+
+                                    var tax = (total * 0.23);
+                                    var subTotal = total - tax;
+                                    tax.ToString();
+                                }
+                            </tbody>
+                    </table>
+                </div>
+                <!-- End -->
+            </div>
+        </div>
+
+        <div class="row py-5 p-4 bg-white rounded shadow-sm">
+            <div class="col-lg-6">
+                <!--<div class="bg-light rounded-pill px-4 py-3 text-center text-uppercase font-weight-bold">Código Promocional</div>
+                <div class="p-4">
+                    <p class="font-italic mb-4">Bónus disponível para usar : @bonus €</p>
+                    <div class="mb-4 border rounded-pill p-2">-->
+                        @*<input type="text" placeholder="Código" aria-describedby="button-addon3" class="form-control border-0">
+        <div class="input-group-append border-0">*@
+                        <!--<a asp-controller="OrderDetails" asp-action="AtivaBonus" class="btn btn-success rounded-pill py-2 btn-block"><i class="fa fa-gift mr-2"></i>Ativar Bónus</a>-->
+                        @*<button id="button-addon3" type="button" class="btn btn-success rounded-pill py-2 btn-block"><i class="fa fa-gift mr-2"></i>Ativar Bónus</button>*@
+                        @*</div>*@
+                    <!--</div>
+                </div>-->
+                <div class="bg-light rounded-pill px-4 py-3 text-center text-uppercase font-weight-bold">Informações para o Vendedor</div>
+                <div class="p-4">
+                    <p class="font-italic mb-4">Caso pretenda deixar alguma informação adicional escreva na caixa em baixo</p>
+                    <textarea name="" cols="30" rows="5" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="bg-light rounded-pill px-4 py-3 text-center text-uppercase font-weight-bold">Resumo Encomenda</div>
+                <div class="p-4">
+                    <ul class="list-unstyled mb-4">
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Subtotal </strong><strong>@Math.Round(subTotal, 2) €</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Portes</strong><strong>5 €</strong></li>
+                        <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">IVA</strong><strong>@Math.Round(tax, 2) € </strong></li>
+                        @*<li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted text-success">Bónus</strong><strong>0 € </strong></li>*@
+                        <li class="d-flex justify-content-between py-3 border-bottom">
+                            <strong class="text-muted">Total</strong>
+                            <h5 class="font-weight-bold">@Math.Round(total, 2) € </h5>
+                        </li>
+                    </ul>
+                    <a asp-controller="OrderDetails" asp-action="CheckOut2" class="btn btn-primary rounded-pill py-2 btn-block">Prosseguir Compra</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

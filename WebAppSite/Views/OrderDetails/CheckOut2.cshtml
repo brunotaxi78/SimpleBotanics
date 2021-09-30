@@ -1,0 +1,172 @@
+﻿@model ClassLib.Models.ShipAddress
+
+@{
+
+    IEnumerable<ClassLib.Models.OrderDetail> orders = ViewData["orderdetails"] as IEnumerable<ClassLib.Models.OrderDetail>;
+    IEnumerable<ClassLib.Models.Order> orderlist = ViewData["orderlist"] as IEnumerable<ClassLib.Models.Order>;
+    IEnumerable<ClassLib.Models.Customer> customerList = ViewData["customerList"] as IEnumerable<ClassLib.Models.Customer>;
+    IEnumerable<ClassLib.Models.ShipAddress> shipAddressesList = ViewData["shipAddressesList"] as IEnumerable<ClassLib.Models.ShipAddress>;
+}
+
+@using Microsoft.AspNetCore.Identity
+@using WebAppSite.Areas.Identity.Data
+
+@inject SignInManager<WebAppSiteUser> SignInManager
+@inject UserManager<WebAppSiteUser> UserManager
+
+
+
+<div class="container">
+
+
+    @{
+
+        var user = await UserManager.FindByNameAsync(User.Identity.Name);
+
+        var firstName = user.FirstName;
+
+        var lastName = user.LastName;
+
+        int? id2 = 0;
+
+        @foreach (var item in orderlist)
+        {
+            id2 = item.CustomerId;
+        }
+
+    }
+
+
+    <div class="row">
+
+        <div class="col-md-8 mb-4">
+            <h4 class="mb-3">Dados de Envio</h4>
+            <form asp-action="FinalizarCompra">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">Primeiro Nome</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="" value="@firstName" readonly>
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Último Nome</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="@lastName" readonly>
+
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="Email">Email</label>
+                    <input type="email" class="form-control" id="email" value="@UserManager.GetUserName(User)" readonly>
+
+                </div>
+                <div class="mb-3">
+                    <label for="Morada">Morada</label>
+
+                    @{
+                        var address = "";
+                        var country = "";
+                        var state = "";
+                        var postalcode = "";
+
+                        @foreach (var item in shipAddressesList)
+                        {
+                            if (item.CustomerId == id2)
+                            {
+                                address = item.Address.ToString();
+                                country = item.Country.ToString();
+                                state = item.State.ToString();
+                                postalcode = item.PostalCode.ToString();
+                            }
+                        }
+                    }
+                    @Html.TextBox(Html.NameFor(model => model.Address).ToString(), address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label for="country">País</label>
+                        @Html.TextBox(Html.NameFor(model => model.Country).ToString(), country, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="state">Cidade</label>
+                        @Html.TextBox(Html.NameFor(model => model.State).ToString(), state, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="zip">Cod.Postal</label>
+                        @Html.TextBox(Html.NameFor(model => model.PostalCode).ToString(), postalcode, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+
+                <input type="submit" value="Pagamento" class="btn btn-primary btn-lg btn-block">
+            </form>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Carrinho de Compras</span>
+            </h4>
+            <ul class="list-group mb-3">
+                @{
+                    var bonus = 0.0;
+                    var total = 5.0; //Valor dos portes
+
+                    @foreach (var customer in customerList)
+                    {
+                        var id = customer.CustomerId;
+                        bonus = customer.ValorBonus;
+                    }
+
+                    @foreach (var item in orders)
+                    {
+
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">@item.Name</h6>
+                                <small class="text-muted">Quantidade : @item.Quantity</small>
+                            </div>
+                            <span class="text-muted">@item.Price €</span>
+                        </li>
+
+                        total += @item.Quantity * @item.Price;
+                    }
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <div class="text-primary">
+                            <h6 class="my-0">Portes Envio</h6>
+                            <small>Portugal</small>
+                        </div>
+                        <span class="text-primary">5.00 €</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-warning">
+                        <span>Total (Euros)</span>
+                        <strong id="total">@total €</strong>
+                    </li>
+
+                }
+
+            </ul>
+            @*<div class="card p-2">
+                    <div class="input-group">
+                        <input type="text" id="bonus" class="form-control" value="@bonus € " readonly>
+                        <div class="input-group-append">
+                            <button id="btnBonus" onclick="AtivaBonus()" class="btn btn-success">Ativar Bónus</button>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

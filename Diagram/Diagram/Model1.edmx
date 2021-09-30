@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="Model1TargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerSet" EntityType="Model1.Customer" />
+          <EntitySet Name="CategorySet" EntityType="Model1.Category" />
+          <EntitySet Name="OrderSet" EntityType="Model1.Order" />
+          <EntitySet Name="OrderDetailSet" EntityType="Model1.OrderDetail" />
+          <EntitySet Name="ProductSet" EntityType="Model1.Product" />
+          <EntitySet Name="SuplierSet" EntityType="Model1.Suplier" />
+          <AssociationSet Name="CategoryProduct" Association="Model1.CategoryProduct">
+            <End Role="Category" EntitySet="CategorySet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
+          <EntitySet Name="BillingAdressSet" EntityType="Model1.BillingAdress" />
+          <AssociationSet Name="BillingAdressCustomer" Association="Model1.BillingAdressCustomer">
+            <End Role="BillingAdress" EntitySet="BillingAdressSet" />
+            <End Role="Customer" EntitySet="CustomerSet" />
+          </AssociationSet>
+          <EntitySet Name="CreditCardSet" EntityType="Model1.CreditCard" />
+          <AssociationSet Name="CustomerCreditCard" Association="Model1.CustomerCreditCard">
+            <End Role="Customer" EntitySet="CustomerSet" />
+            <End Role="CreditCard" EntitySet="CreditCardSet" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerOrder" Association="Model1.CustomerOrder">
+            <End Role="Customer" EntitySet="CustomerSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="StatusSet" EntityType="Model1.Status" />
+          <AssociationSet Name="StatusOrder" Association="Model1.StatusOrder">
+            <End Role="Status" EntitySet="StatusSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="ShipAdressSet" EntityType="Model1.ShipAdress" />
+          <AssociationSet Name="CustomerShipAdress" Association="Model1.CustomerShipAdress">
+            <End Role="Customer" EntitySet="CustomerSet" />
+            <End Role="ShipAdress" EntitySet="ShipAdressSet" />
+          </AssociationSet>
+          <AssociationSet Name="BillingAdressOrder" Association="Model1.BillingAdressOrder">
+            <End Role="BillingAdress" EntitySet="BillingAdressSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="ShipAdressOrder" Association="Model1.ShipAdressOrder">
+            <End Role="ShipAdress" EntitySet="ShipAdressSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="ProductSupplierSet" EntityType="Model1.ProductSupplier" />
+          <AssociationSet Name="ProductProductSupplier" Association="Model1.ProductProductSupplier">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="ProductSupplier" EntitySet="ProductSupplierSet" />
+          </AssociationSet>
+          <AssociationSet Name="SuplierProductSupplier" Association="Model1.SuplierProductSupplier">
+            <End Role="Suplier" EntitySet="SuplierSet" />
+            <End Role="ProductSupplier" EntitySet="ProductSupplierSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderOrderDetail" Association="Model1.OrderOrderDetail">
+            <End Role="Order" EntitySet="OrderSet" />
+            <End Role="OrderDetail" EntitySet="OrderDetailSet" />
+          </AssociationSet>
+          <AssociationSet Name="OrderDetailProduct" Association="Model1.OrderDetailProduct">
+            <End Role="OrderDetail" EntitySet="OrderDetailSet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" />
+          <Property Name="Adress" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="PostalCode" Type="String" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <NavigationProperty Name="BillingAdress" Relationship="Model1.BillingAdressCustomer" FromRole="Customer" ToRole="BillingAdress" />
+          <NavigationProperty Name="CreditCard" Relationship="Model1.CustomerCreditCard" FromRole="Customer" ToRole="CreditCard" />
+          <NavigationProperty Name="Order" Relationship="Model1.CustomerOrder" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="ShipAdress" Relationship="Model1.CustomerShipAdress" FromRole="Customer" ToRole="ShipAdress" />
+          <Property Name="BillingAddressId" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubCategory" Type="String" Nullable="false" />
+          <Property Name="CatagoryName" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Model1.CategoryProduct" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNumber" Type="String" Nullable="false" />
+          <Property Name="PaymentId" Type="String" Nullable="false" />
+          <Property Name="OrderDate" Type="String" Nullable="false" />
+          <Property Name="ShipDate" Type="String" Nullable="false" />
+          <Property Name="Freight" Type="String" Nullable="false" />
+          <Property Name="SalesTax" Type="String" Nullable="false" />
+          <Property Name="Paid" Type="String" Nullable="false" />
+          <Property Name="PaymentDate" Type="String" Nullable="false" />
+          <Property Name="CustomerId" Type="String" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Model1.CustomerOrder" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Status" Relationship="Model1.StatusOrder" FromRole="Order" ToRole="Status" />
+          <NavigationProperty Name="BillingAdress" Relationship="Model1.BillingAdressOrder" FromRole="Order" ToRole="BillingAdress" />
+          <NavigationProperty Name="ShipAdress" Relationship="Model1.ShipAdressOrder" FromRole="Order" ToRole="ShipAdress" />
+          <Property Name="BillingAddressId" Type="String" Nullable="false" />
+          <Property Name="StatusId" Type="String" Nullable="false" />
+          <NavigationProperty Name="OrderDetail" Relationship="Model1.OrderOrderDetail" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailId" />
+          </Key>
+          <Property Name="OrderDetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="String" Nullable="false" />
+          <Property Name="ProductId" Type="String" Nullable="false" />
+          <Property Name="Price" Type="String" Nullable="false" />
+          <Property Name="Quantity" Type="String" Nullable="false" />
+          <Property Name="Discount" Type="String" Nullable="false" />
+          <Property Name="Total" Type="String" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Model1.OrderOrderDetail" FromRole="OrderDetail" ToRole="Order" />
+          <Property Name="Tax" Type="String" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Model1.OrderDetailProduct" FromRole="OrderDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="SKU" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Price" Type="String" Nullable="false" />
+          <Property Name="Size" Type="String" Nullable="false" />
+          <Property Name="Stock" Type="String" Nullable="false" />
+          <Property Name="Color" Type="String" Nullable="false" />
+          <Property Name="Picture" Type="String" Nullable="false" />
+          <Property Name="Ranking" Type="String" Nullable="false" />
+          <Property Name="CategoryId" Nullable="false" Type="String" />
+          <NavigationProperty Name="Category" Relationship="Model1.CategoryProduct" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="ProductSupplier" Relationship="Model1.ProductProductSupplier" FromRole="Product" ToRole="ProductSupplier" />
+          <NavigationProperty Name="OrderDetail" Relationship="Model1.OrderDetailProduct" FromRole="Product" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="Suplier">
+          <Key>
+            <PropertyRef Name="SuplierId" />
+          </Key>
+          <Property Name="SuplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="ContactName" Type="String" Nullable="false" />
+          <Property Name="Adress" Type="String" Nullable="false" />
+          <Property Name="City" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="PostalCode" Type="String" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <Property Name="Url" Type="String" Nullable="false" />
+          <Property Name="DiscountType" Type="String" Nullable="false" />
+          <Property Name="Notes" Type="String" Nullable="false" />
+          <NavigationProperty Name="ProductSupplier" Relationship="Model1.SuplierProductSupplier" FromRole="Suplier" ToRole="ProductSupplier" />
+        </EntityType>
+        <Association Name="CategoryProduct">
+          <End Type="Model1.Category" Role="Category" Multiplicity="1" />
+          <End Type="Model1.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <EntityType Name="BillingAdress">
+          <Key>
+            <PropertyRef Name="BillingAdressId" />
+          </Key>
+          <Property Name="BillingAdressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adress" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="PostalCode" Type="String" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Model1.BillingAdressCustomer" FromRole="BillingAdress" ToRole="Customer" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Model1.BillingAdressOrder" FromRole="BillingAdress" ToRole="Order" />
+        </EntityType>
+        <Association Name="BillingAdressCustomer">
+          <End Type="Model1.BillingAdress" Role="BillingAdress" Multiplicity="1" />
+          <End Type="Model1.Customer" Role="Customer" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CreditCard">
+          <Key>
+            <PropertyRef Name="CreditCardId" />
+          </Key>
+          <Property Name="CreditCardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CardName" Type="String" Nullable="false" />
+          <Property Name="CardNumber" Type="String" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Model1.CustomerCreditCard" FromRole="CreditCard" ToRole="Customer" />
+          <Property Name="CustomerId" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CustomerCreditCard">
+          <End Type="Model1.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model1.CreditCard" Role="CreditCard" Multiplicity="*" />
+        </Association>
+        <Association Name="CustomerOrder">
+          <End Type="Model1.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model1.Order" Role="Order" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Model1.StatusOrder" FromRole="Status" ToRole="Order" />
+        </EntityType>
+        <Association Name="StatusOrder">
+          <End Type="Model1.Status" Role="Status" Multiplicity="1" />
+          <End Type="Model1.Order" Role="Order" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ShipAdress">
+          <Key>
+            <PropertyRef Name="ShipAdressId" />
+          </Key>
+          <Property Name="ShipAdressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Adress" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="PostalCode" Type="String" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Model1.CustomerShipAdress" FromRole="ShipAdress" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="Model1.ShipAdressOrder" FromRole="ShipAdress" ToRole="Order" />
+          <Property Name="OrderId" Type="String" Nullable="false" />
+          <Property Name="CustomerId" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CustomerShipAdress">
+          <End Type="Model1.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model1.ShipAdress" Role="ShipAdress" Multiplicity="*" />
+        </Association>
+        <Association Name="BillingAdressOrder">
+          <End Type="Model1.BillingAdress" Role="BillingAdress" Multiplicity="1" />
+          <End Type="Model1.Order" Role="Order" Multiplicity="*" />
+        </Association>
+        <Association Name="ShipAdressOrder">
+          <End Type="Model1.ShipAdress" Role="ShipAdress" Multiplicity="1" />
+          <End Type="Model1.Order" Role="Order" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ProductSupplier">
+          <Key>
+            <PropertyRef Name="ProductSupplierId" />
+          </Key>
+          <Property Name="ProductSupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="String" Nullable="false" />
+          <Property Name="SupplierId" Type="String" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Model1.ProductProductSupplier" FromRole="ProductSupplier" ToRole="Product" />
+          <NavigationProperty Name="Suplier" Relationship="Model1.SuplierProductSupplier" FromRole="ProductSupplier" ToRole="Suplier" />
+        </EntityType>
+        <Association Name="ProductProductSupplier">
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model1.ProductSupplier" Role="ProductSupplier" Multiplicity="*" />
+        </Association>
+        <Association Name="SuplierProductSupplier">
+          <End Type="Model1.Suplier" Role="Suplier" Multiplicity="1" />
+          <End Type="Model1.ProductSupplier" Role="ProductSupplier" Multiplicity="*" />
+        </Association>
+        <Association Name="OrderOrderDetail">
+          <End Type="Model1.Order" Role="Order" Multiplicity="1" />
+          <End Type="Model1.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+        </Association>
+        <Association Name="OrderDetailProduct">
+          <End Type="Model1.OrderDetail" Role="OrderDetail" Multiplicity="1" />
+          <End Type="Model1.Product" Role="Product" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Model1" />
+        <Alias Key="Target" Value="Model1.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model1Container" StorageEntityContainer="Model1TargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

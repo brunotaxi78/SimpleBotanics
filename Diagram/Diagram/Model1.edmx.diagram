@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1fa27c063bad45ddb44d93c73e72a15f" Name="Diagram2" ZoomLevel="86" >
+        <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="6.125" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.Category" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.Order" Width="1.5" PointX="8.5" PointY="3.125" />
+        <EntityTypeShape EntityType="Model1.OrderDetail" Width="1.5" PointX="11" PointY="3.875" />
+        <EntityTypeShape EntityType="Model1.Product" Width="1.5" PointX="0.5" PointY="3.375" />
+        <EntityTypeShape EntityType="Model1.Suplier" Width="1.5" PointX="4.375" PointY="3.375" />
+        <AssociationConnector Association="Model1.CategoryProduct" />
+        <EntityTypeShape EntityType="Model1.BillingAdress" Width="1.5" PointX="3.125" PointY="0.5" />
+        <AssociationConnector Association="Model1.BillingAdressCustomer" />
+        <EntityTypeShape EntityType="Model1.CreditCard" Width="1.5" PointX="6.25" PointY="5.25" />
+        <AssociationConnector Association="Model1.CustomerCreditCard" />
+        <AssociationConnector Association="Model1.CustomerOrder" />
+        <EntityTypeShape EntityType="Model1.Status" Width="1.5" PointX="8.25" PointY="0.5" />
+        <AssociationConnector Association="Model1.StatusOrder" />
+        <EntityTypeShape EntityType="Model1.ShipAdress" Width="1.5" PointX="10.5" PointY="0.5" />
+        <AssociationConnector Association="Model1.CustomerShipAdress" />
+        <AssociationConnector Association="Model1.BillingAdressOrder" />
+        <AssociationConnector Association="Model1.ShipAdressOrder" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="Model1.ProductSupplier" Width="1.5" PointX="2.5" PointY="4.625" />
+        <AssociationConnector Association="Model1.ProductProductSupplier" />
+        <AssociationConnector Association="Model1.SuplierProductSupplier" />
+        <AssociationConnector Association="Model1.OrderOrderDetail" />
+        <AssociationConnector Association="Model1.OrderDetailProduct" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

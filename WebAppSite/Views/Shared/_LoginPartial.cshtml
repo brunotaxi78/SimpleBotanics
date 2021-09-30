@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebAppSite.Areas.Identity.Data
+
+@inject SignInManager<WebAppSiteUser> SignInManager
+@inject UserManager<WebAppSiteUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link text-primary" >Olá, @UserManager.GetUserName(User)!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link waves-effect" asp-controller="OrderDetails" asp-action="ShoppingCart">
+                <span id="num" class="badge badge-danger z-depth-1"></span>
+                <i class="fas fa-shopping-cart"></i>
+                <span class="clearfix d-none d-sm-inline-block"></span>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i>
+
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Definições</a>
+                <a class="dropdown-item" asp-controller="Orders" asp-action="ClientOrders">Encomendas</a>
+                <div class="dropdown-divider"></div>
+                <form id="logoutForm" class="form-inline text-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index2", "Products", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link btn btn-link text-danger">Sair</button>
+                </form>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login/Registar</a>
+        </li>
+    }
+</ul>
+
+

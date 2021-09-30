@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsFormsApp", "WindowsFormsApp\WindowsFormsApp.csproj", "{AB42CC35-F801-4F41-91AD-E24F4F70A2BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLib", "ClassLib\ClassLib.csproj", "{3EAD3A73-50A1-4761-B5DD-E3632537C201}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{D0F7B5C6-27E7-4FA9-998D-9D99DF918E56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diagram", "Diagram\Diagram.csproj", "{5FC0AF6E-93D6-4343-B6AD-AA0CDF16F2DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{9DA79012-0CE5-4BC9-905F-E3989E731C80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppSite", "WebAppSite\WebAppSite.csproj", "{781D2D4C-78D3-438E-927F-12042DD0AE72}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3EAD3A73-50A1-4761-B5DD-E3632537C201} = {3EAD3A73-50A1-4761-B5DD-E3632537C201}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB42CC35-F801-4F41-91AD-E24F4F70A2BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB42CC35-F801-4F41-91AD-E24F4F70A2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB42CC35-F801-4F41-91AD-E24F4F70A2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB42CC35-F801-4F41-91AD-E24F4F70A2BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EAD3A73-50A1-4761-B5DD-E3632537C201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EAD3A73-50A1-4761-B5DD-E3632537C201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EAD3A73-50A1-4761-B5DD-E3632537C201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EAD3A73-50A1-4761-B5DD-E3632537C201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F7B5C6-27E7-4FA9-998D-9D99DF918E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F7B5C6-27E7-4FA9-998D-9D99DF918E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F7B5C6-27E7-4FA9-998D-9D99DF918E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F7B5C6-27E7-4FA9-998D-9D99DF918E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC0AF6E-93D6-4343-B6AD-AA0CDF16F2DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC0AF6E-93D6-4343-B6AD-AA0CDF16F2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC0AF6E-93D6-4343-B6AD-AA0CDF16F2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC0AF6E-93D6-4343-B6AD-AA0CDF16F2DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA79012-0CE5-4BC9-905F-E3989E731C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA79012-0CE5-4BC9-905F-E3989E731C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA79012-0CE5-4BC9-905F-E3989E731C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA79012-0CE5-4BC9-905F-E3989E731C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{781D2D4C-78D3-438E-927F-12042DD0AE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{781D2D4C-78D3-438E-927F-12042DD0AE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{781D2D4C-78D3-438E-927F-12042DD0AE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{781D2D4C-78D3-438E-927F-12042DD0AE72}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {57BF1AFD-DB8B-4B6F-AB5D-46EDB6965A5C}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/nunosilvacampos
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Diagram\\Diagram.csproj
+		SccProjectName1 = Diagram
+		SccLocalPath1 = Diagram
+		SccProjectUniqueName2 = ClassLib\\ClassLib.csproj
+		SccProjectName2 = ClassLib
+		SccLocalPath2 = ClassLib
+		SccProjectUniqueName5 = WebAPI\\WebAPI.csproj
+		SccProjectName5 = WebAPI
+		SccLocalPath5 = WebAPI
+		SccProjectUniqueName6 = WebAppSite\\WebAppSite.csproj
+		SccProjectName6 = WebAppSite
+		SccLocalPath6 = WebAppSite
+	EndGlobalSection
+EndGlobal
